@@ -48,7 +48,7 @@
     <script type="text/javascript">
       "use strict"
       var dados = [ // essa é uma lista de objetos json
-        {'letra': 'A', 'valor': 12},
+        {'letra': 'A', 'valor': 2},
         {'letra': 'B', 'valor': 53},
         {'letra': 'C', 'valor': 62},
         {'letra': 'D', 'valor': 40},
@@ -77,9 +77,14 @@
       /*
        * As escalas
        */
-      var x = d3.scaleBand(); // Configure essa escala com domain, range e padding
+      var x = d3.scaleBand()
+                .domain(dados.map(a => a.letra))
+                .range([0,700])
+                .padding(0.2); // Configure essa escala com domain, range e padding
 
-      var y = d3.scaleLinear() // Configure essa escala com domain e range
+      var y = d3.scaleLinear()
+                .domain([d3.max(dados.map(a => a.valor)), d3.min(dados.map(a => a.valor))])
+                .range([0,350])// Configure essa escala com domain e range
                                // Lembre que uma escala pode converter de 1..10 -> 100..1
 
       // === ATÉ DAQUI ===

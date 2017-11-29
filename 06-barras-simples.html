@@ -21,7 +21,7 @@
       }
 
       .mychart text {
-        fill: white;
+        fill: black;
         font: 10px sans-serif;
         text-anchor: end;
       }
@@ -29,7 +29,7 @@
 
     <script type="text/javascript">
       "use strict"
-      var dados = [40, 80, 96, 76, 23, 42, 32, 90, 11, 22, 14];
+      var dados = [40, 80, 96, 76, 23, 42, 32, 90, 11, 22, 14, 20, 13];
       var largura = 200,
           altura = 500;
 
@@ -49,14 +49,25 @@
        * (Nem pense em fazer hardcoded :)).
        */
 
-      svg.selectAll('rect')
+
+
+      var rec = svg.selectAll('rect')
           .data(dados)
           .enter()
             .append('rect')
               .attr('x', 0) // A função com dois parâmetros pode entrar aqui
-              .attr('y', 0) // e aqui
-              .attr('width', 30)
-              .attr('height', 20);
+              .attr('width', function(d) {return d;})
+              .attr('y', function(d, i) {return i*35;}) // e aqui
+              .attr('height', 30)
+
+      svg.selectAll('text')
+                 .data(dados)
+                 .enter()
+                   .append('text')
+                      .attr('x', function(d){return d-5>=0? d-5:0;})
+                      .attr('y', function(d, i) {return i*35+18;})
+                      .attr('font-size', '10px')
+                      .text(function(d) {return d});
 
       /* Mais dicas :
        * - As barras ficam mais legíveis se não encostarem umas nas outras. Para isso
